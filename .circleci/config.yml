@@ -16,5 +16,5 @@ jobs:
       - run:
           name: install npm
           command: npm install
-      - store_artifact: 
+      - store_artifacts: 
           path : ~/app/build
