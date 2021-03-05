@@ -20,18 +20,41 @@ const firebaseConfig = {
     measurementId: "G-42QCYCNS6T"
 };
 
-firebase.initializeApp(firebaseConfig);
-
+if (!firebase.apps.length) {
+    console.log("initialize");
+    firebase.initializeApp(firebaseConfig);
+} else {
+    firebase.app(); // if already initialized, use that one
+    console.log("existu");
+}
 
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider()
+const provider = new firebase.auth.GoogleAuthProvider();
 
 provider.setCustomParameters({ 'prompt': 'select_account' });
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
+
+export const createUserProfile = async (authUser, additionalData) => {
+
+    const userRef = firestore.doc(`/users/${authUser.uid}`);
+    const snapshot = await userRef.get();
+    if (!snapshot.exists) {
+        const { displayName, email } = authUser;
+        const createdAt = new Date();
+        try {
+            await userRef.set({ displayName, createdAt, email, ...additionalData });
+        } catch (error) {
+            console.log('error creating user', error.message);
+        }
+    }
+    return userRef;
+
+}
 
 export default firebase;
 
