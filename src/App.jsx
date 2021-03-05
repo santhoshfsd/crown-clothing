@@ -7,6 +7,7 @@ import HomePage from './page/homepage/homepage.component';
 import ShopPage from './page/shop-page/shoppage.component';
 import SignInAndSignUpPage from './page/sign-in-sign-up/sign-in-sign-up.component';
 import Header from './component/header/header.component';
+
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 class App extends React.Component {
@@ -20,6 +21,7 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
       console.log(user);
       if (user) {
@@ -36,8 +38,6 @@ class App extends React.Component {
       } else {
         this.setState({ currentUser: user });
       }
-
-
     });
   }
 

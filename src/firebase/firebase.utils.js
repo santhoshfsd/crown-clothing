@@ -20,6 +20,7 @@ const firebaseConfig = {
     measurementId: "G-42QCYCNS6T"
 };
 
+
 if (!firebase.apps.length) {
     console.log("initialize");
     firebase.initializeApp(firebaseConfig);
@@ -32,12 +33,11 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
+const provider = new firebase.auth.GoogleAuthProvider()
 
 provider.setCustomParameters({ 'prompt': 'select_account' });
 
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
-
 
 export const createUserProfileDocument = async (authUser, additionalData) => {
 
