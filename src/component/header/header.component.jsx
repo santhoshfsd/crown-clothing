@@ -10,6 +10,8 @@ import { connect } from 'react-redux'
 
 import './header.styles.scss';
 
+import CartIcon from './../cart-icon/cart-icon.components'
+
 const Header = ({ currentUser }) => (
     <div className='header'>
         <Link className='logo-container' to='/'>
@@ -31,6 +33,7 @@ const Header = ({ currentUser }) => (
                     SIGN IN
                 </Link>
             )}
+            <CartIcon />
         </div>
     </div>
 );
