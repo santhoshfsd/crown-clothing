@@ -1,7 +1,10 @@
 import React from 'react';
 import './checkout.styles.scss';
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+import { selectCartItems, selectCartTotal } from './../../redux/cart/cart.selectors'
 
-const CheckoutPage = () => {
+const CheckoutPage = ({ cartItems, cartTotal }) => {
     return <div className="checkout-page">
 
         <div className="checkout-header">
@@ -21,7 +24,18 @@ const CheckoutPage = () => {
                 <span>Remove</span>
             </div>
         </div>
-    </div>
+        {
+            cartItems.map(item => <span> {item.name}</span>)
+        }
+        <div className="total">
+            <span> Total : {cartTotal}</span>
+        </div>
+    </div >
 }
 
-export default CheckoutPage;
+const mapStateToProps = createStructuredSelector({
+    cartItems: selectCartItems,
+    cartTotal: selectCartTotal
+})
+
+export default connect(mapStateToProps)(CheckoutPage);
